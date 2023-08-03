@@ -7,5 +7,43 @@
     <script defer src="app.js"></script>
     <title>Weather app</title>
   </head>
-  <body></body>
+  <body>
+    <header class="main-weather main-grid">
+      <input
+        type="search"
+        id="site-search"
+        name="q"
+        placeholder="Search city"
+      />
+
+      <button>Search</button>
+
+      <p class="main-date">Aug 03, 3:31 pm</p>
+      <h1 class="city-name">Halifax, NS</h1>
+      <p class="main-weather-description">Feels like 20 °C. Overcast clouds</p>
+      <div class="main-temp">
+        <img class="weather-img" src="" alt="" />
+        <h2 class="temp">21</h2>
+        <span class="main-temp-unit">°C</span>
+      </div>
+      <div class="wather-conditions">
+        <p class="humidity">Humidity: 53%</p>
+        <p class="wind">Wind speed: 3.3 m/s</p>
+      </div>
+    </header>
+
+    <section class="forecast main-grid">
+      <p class="forecast-date">Thu, Aug 03</p>
+      <div class="forecast-temp">
+        <img src="" alt="" />
+        <p class="foracast-temp-range">
+          <span class="max-temp">21</span> /
+          <span class="min-temp">14</span>
+          <span class="forecast-temp-unit">°C</span>
+        </p>
+      </div>
+
+      <p class="forecast-weather-description">light rain</p>
+    </section>
+  </body>
 </html>
