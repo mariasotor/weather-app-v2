@@ -3,47 +3,159 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="style.css" />
     <script defer src="app.js"></script>
     <title>Weather app</title>
   </head>
   <body>
-    <header class="main-weather main-grid">
-      <input
-        type="search"
-        id="site-search"
-        name="q"
-        placeholder="Search city"
-      />
-
-      <button>Search</button>
-
-      <p class="main-date">Aug 03, 3:31 pm</p>
-      <h1 class="city-name">Halifax, NS</h1>
-      <p class="main-weather-description">Feels like 20 °C. Overcast clouds</p>
-      <div class="main-temp">
-        <img class="weather-img" src="" alt="" />
-        <h2 class="temp">21</h2>
-        <span class="main-temp-unit">°C</span>
-      </div>
-      <div class="wather-conditions">
-        <p class="humidity">Humidity: 53%</p>
-        <p class="wind">Wind speed: 3.3 m/s</p>
-      </div>
-    </header>
-
-    <section class="forecast main-grid">
-      <p class="forecast-date">Thu, Aug 03</p>
-      <div class="forecast-temp">
-        <img src="" alt="" />
-        <p class="foracast-temp-range">
-          <span class="max-temp">21</span> /
-          <span class="min-temp">14</span>
-          <span class="forecast-temp-unit">°C</span>
+    <div class="wrapper">
+      <main class="main-weather col-3-grid">
+        <div class="search-bar">
+          <input
+            class="city-input"
+            type="search"
+            id="site-search"
+            name="q"
+            placeholder="Search city"
+          />
+          <button class="btn" type="submit">Search</button>
+        </div>
+        <p class="main-date">Aug 03, 3:31 pm</p>
+        <h1 class="city-name">Halifax, NS</h1>
+        <p class="main-weather-description">
+          Feels like 20 °C. Overcast clouds
         </p>
-      </div>
+        <div class="main-temp">
+          <img
+            class="weather-img"
+            src="	https://openweathermap.org/img/wn/01d@2x.png"
+            alt=""
+          />
+          <h2 class="temp">
+            21
+            <span class="main-temp-unit">°C</span>
+          </h2>
+        </div>
+        <ul class="weather-conditions">
+          <li class="humidity">Humidity: 53%</li>
+          <li class="wind">Wind speed: 3.3 m/s</li>
+        </ul>
+        <h3 class="forecast-title">6-day forecast</h3>
+      </main>
 
-      <p class="forecast-weather-description">light rain</p>
-    </section>
+      <section>
+        <div class="forecast col-3-grid">
+          <p class="forecast-date">Thu, Aug 03</p>
+          <div class="forecast-temp">
+            <img
+              class="weather-img-forecast"
+              src="http://openweathermap.org/img/wn/09d@2x.png"
+              alt=""
+            />
+
+            <p class="forecast-temp-range">
+              <span class="max-temp">21</span> /
+              <span class="min-temp">14</span>
+              <span class="forecast-temp-unit">°C</span>
+            </p>
+          </div>
+          <p class="forecast-weather-description">light rain</p>
+        </div>
+
+        <div class="forecast col-3-grid">
+          <p class="forecast-date">Thu, Aug 03</p>
+          <div class="forecast-temp">
+            <img
+              class="weather-img-forecast"
+              src="http://openweathermap.org/img/wn/09d@2x.png"
+              alt=""
+            />
+
+            <p class="forecast-temp-range">
+              <span class="max-temp">21</span> /
+              <span class="min-temp">14</span>
+              <span class="forecast-temp-unit">°C</span>
+            </p>
+          </div>
+          <p class="forecast-weather-description">light rain</p>
+        </div>
+        <div class="forecast col-3-grid">
+          <p class="forecast-date">Thu, Aug 03</p>
+          <div class="forecast-temp">
+            <img
+              class="weather-img-forecast"
+              src="http://openweathermap.org/img/wn/09d@2x.png"
+              alt=""
+            />
+
+            <p class="forecast-temp-range">
+              <span class="max-temp">21</span> /
+              <span class="min-temp">14</span>
+              <span class="forecast-temp-unit">°C</span>
+            </p>
+          </div>
+          <p class="forecast-weather-description">light rain</p>
+        </div>
+        <div class="forecast col-3-grid">
+          <p class="forecast-date">Thu, Aug 03</p>
+          <div class="forecast-temp">
+            <img
+              class="weather-img-forecast"
+              src="http://openweathermap.org/img/wn/09d@2x.png"
+              alt=""
+            />
+
+            <p class="forecast-temp-range">
+              <span class="max-temp">21</span> /
+              <span class="min-temp">14</span>
+              <span class="forecast-temp-unit">°C</span>
+            </p>
+          </div>
+          <p class="forecast-weather-description">light rain</p>
+        </div>
+        <div class="forecast col-3-grid">
+          <p class="forecast-date">Thu, Aug 03</p>
+          <div class="forecast-temp">
+            <img
+              class="weather-img-forecast"
+              src="http://openweathermap.org/img/wn/09d@2x.png"
+              alt=""
+            />
+
+            <p class="forecast-temp-range">
+              <span class="max-temp">21</span> /
+              <span class="min-temp">14</span>
+              <span class="forecast-temp-unit">°C</span>
+            </p>
+          </div>
+          <p class="forecast-weather-description">light rain</p>
+        </div>
+        <div class="forecast col-3-grid">
+          <p class="forecast-date">Thu, Aug 03</p>
+          <div class="forecast-temp">
+            <img
+              class="weather-img-forecast"
+              src="http://openweathermap.org/img/wn/09d@2x.png"
+              alt=""
+            />
+
+            <p class="forecast-temp-range">
+              <span class="max-temp">21</span> /
+              <span class="min-temp">14</span>
+              <span class="forecast-temp-unit">°C</span>
+            </p>
+          </div>
+          <p class="forecast-weather-description">light rain</p>
+        </div>
+      </section>
+    </div>
   </body>
 </html>

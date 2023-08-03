@@ -1,0 +1,186 @@
+* {
+  box-sizing: border-box;
+  margin-top: 0;
+}
+
+body {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #aacc00;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  background: #1e1e1e;
+  border-radius: 10px;
+  width: 70%;
+  max-width: 900px;
+}
+
+/* =====Typography======= */
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+}
+
+/* main */
+
+.city-name {
+  font-size: 2.5rem;
+  margin-bottom: 0.3em;
+}
+
+.main-date {
+  opacity: 0.7;
+  margin: 0;
+}
+
+.main-weather-description {
+  font-size: 1.25rem;
+  margin-bottom: 2em;
+}
+
+.temp {
+  font-size: 3rem;
+}
+
+.weather-conditions {
+  font-size: 1.125rem;
+}
+
+/* forecast */
+
+.forecast-title {
+  font-size: 1.25rem;
+  margin: 1em 0;
+}
+
+.forecast-title::after {
+  content: "";
+  display: block;
+  margin-top: 0.3em;
+  background: #aacc00;
+  width: 40px;
+  height: 3px;
+}
+
+/* Search bar */
+
+.search-bar {
+  margin: 0;
+  padding: 2em 0;
+  display: flex;
+  gap: 1em;
+}
+
+.city-input,
+.btn {
+  font-family: inherit;
+  font-size: inherit;
+  border-radius: 4px;
+}
+
+.city-input {
+  width: 100%;
+  padding: 0.75em;
+  border: 1px solid #c2c2c2;
+}
+
+.btn {
+  padding: 0 2em;
+  border: 0;
+  cursor: pointer;
+  transition: all 250ms ease-in-out;
+}
+
+.btn:hover,
+btn:focus {
+  background: #aacc00;
+  font-weight: 700;
+  color: #1e1e1e;
+}
+
+/* =====Layout======= */
+
+.col-3-grid {
+  display: grid;
+  grid-template-columns: minmax(1em, 1fr) repeat(3, minmax(0px, 230px)) minmax(
+      1em,
+      1fr
+    );
+}
+
+/* main */
+
+.main-weather {
+  align-items: center;
+}
+
+.main-date,
+.city-name,
+.main-weather-description,
+.search-bar {
+  grid-column: 2/-2;
+}
+
+.main-temp {
+  grid-column: 2 / span 2;
+  display: flex;
+}
+
+.weather-img {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  top: -15px;
+}
+
+.weather-conditions {
+  grid-column: 4;
+  justify-self: end;
+  display: flex;
+  gap: 0.5em 0;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+/* forecast */
+
+.forecast {
+  align-items: center;
+  padding-bottom: 0.5em;
+}
+
+.forecast-title {
+  grid-column: -2/2;
+}
+.forecast-date {
+  grid-column: 2;
+}
+
+.forecast-temp {
+  grid-column: 3;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+}
+
+.weather-img-forecast {
+  width: 50px;
+  height: auto;
+  position: relative;
+  top: -5px;
+}
+
+.forecast-weather-description {
+  grid-column: 4;
+  justify-self: end;
+}
