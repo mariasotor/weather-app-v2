@@ -45,9 +45,32 @@ function formatForecastDate(timestamp) {
   return dateStr;
 }
 
-// ========Getting data from API========
+// ==Getting data from API and DOM manipulation==
 
 async function renderWeather(city) {
+  //Formatting main section date
+  const now = new Date();
+  const day = `${now.getDate()}`.padStart(2, 0);
+  let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = months[now.getMonth()];
+  const hour = now.getHours();
+  const minutes = `${now.getMinutes()}`.padStart(2, 0);
+
+  const dateNTime = `${month} ${day}, ${hour}:${minutes}`;
+
   // Geocoding
   const responseGeo = await fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba
@@ -57,7 +80,7 @@ async function renderWeather(city) {
   const lat = dataGeo.lat;
   const lon = dataGeo.lon;
 
-  //weather data
+  // current weather data
   const key = "a1921bd56aaa472aba50748fba60247c";
 
   const responseWeather = await fetch(
@@ -68,9 +91,8 @@ async function renderWeather(city) {
   const [dataWeather] = data;
   console.log(dataWeather);
 
-  // const [data] = dataWeather;
-
   //Updating UI (main section)
+  mainDate.textContent = dateNTime;
   cityName.textContent = dataWeather.city_name;
   feelTemp.textContent = Math.round(dataWeather.app_temp);
   mainWeather.textContent = dataWeather.weather.description;
@@ -79,8 +101,7 @@ async function renderWeather(city) {
   humidity.textContent = dataWeather.rh;
   wind.textContent = Math.round(dataWeather.wind_spd * 3.6);
 
-  //Forecast data
-
+  //Getting forecast data
   const responseForecast = await fetch(
     `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}`
   );
@@ -88,6 +109,7 @@ async function renderWeather(city) {
   const { data: dataForecast } = await responseForecast.json();
   console.log(dataForecast[0]);
 
+  // Update UI (forecast data)
   dataForecast.slice(0, 6).forEach((day) => {
     const html = `
   <div class="grid">
@@ -106,7 +128,7 @@ async function renderWeather(city) {
               <span class="min-temp">${day.min_temp}</span>°C
             </p>
         </div>
-        <p class="forecast-weather-description">{day.weather.description}</p>
+        <p class="forecast-weather-description">${day.weather.description}</p>
   </div>`;
 
     forecastContainer.insertAdjacentHTML("beforebegin", html);
