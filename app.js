@@ -77,4 +77,22 @@ async function renderWeather(city) {
   </div>`;
 }
 
-renderWeather("cali");
+// ========Event handlers========
+
+function defineCity() {
+  const city = searchInput.value;
+  renderWeather(city);
+  searchInput.value = "";
+}
+
+searchBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  defineCity();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && searchInput.value) defineCity();
+});
+
+// Default City
+renderWeather("new york");
