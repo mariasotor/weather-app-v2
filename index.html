@@ -25,13 +25,15 @@
             id="site-search"
             name="q"
             placeholder="Search city"
+            autocomplete="off"
           />
           <button class="btn" type="submit">Search</button>
         </div>
         <p class="main-date">Aug 03, 3:31 pm</p>
         <h1 class="city-name">Halifax, NS</h1>
         <p class="main-weather-description">
-          Feels like 20 °C. Overcast clouds
+          Feels like <span class="feels-like-temp"> 20 </span> °C.
+          <span class="weather-description">Overcast clouds</span>
         </p>
         <div class="main-temp">
           <img
@@ -39,20 +41,19 @@
             src="	https://openweathermap.org/img/wn/01d@2x.png"
             alt=""
           />
-          <h2 class="temp">
-            21
-            <span class="main-temp-unit">°C</span>
-          </h2>
+          <h2 class="temp"><span class="temp-value">21</span> °C</h2>
         </div>
         <ul class="weather-conditions">
-          <li class="humidity">Humidity: 53%</li>
-          <li class="wind">Wind: 3.3 m/s</li>
+          <li class="humidity">
+            Humidity: <span class="humidity-value">53</span>%
+          </li>
+          <li class="wind">Wind: <span class="wind-value">3.3</span> Km/h</li>
         </ul>
         <h3 class="forecast-title">6-day forecast</h3>
       </main>
 
-      <section>
-        <div class="forecast grid">
+      <section class="forecast">
+        <div class="grid">
           <p class="forecast-date">Thu, Aug 03</p>
           <div class="forecast-temp">
             <img
