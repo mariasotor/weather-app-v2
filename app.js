@@ -15,6 +15,36 @@ const wind = document.querySelector(".wind-value");
 
 const forecastContainer = document.querySelector(".forecast");
 
+// ==== Forecast date formatting ====
+
+function formatForecastDate(timestamp) {
+  const date = new Date(timestamp);
+
+  const day = `${date.getDate()}`.padStart(2, 0);
+
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const weekday = weekdays[date.getDay()];
+
+  let months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = months[date.getMonth()];
+
+  const dateStr = `${weekday}, ${month} ${day}`;
+  return dateStr;
+}
+
 // ========Getting data from API========
 
 async function renderWeather(city) {
@@ -61,11 +91,13 @@ async function renderWeather(city) {
   dataForecast.slice(0, 6).forEach((day) => {
     const html = `
   <div class="grid">
-    <p class="forecast-date">Thu, Aug 03</p>
+    <p class="forecast-date">${formatDate(day.ts)}</p>
         <div class="forecast-temp">
             <img
               class="weather-img-forecast"
-              src="https://cdn.weatherbit.io/static/img/icons/${day.weather.icon}.png"
+              src="https://cdn.weatherbit.io/static/img/icons/${
+                day.weather.icon
+              }.png"
               alt=""
             />
 
@@ -99,4 +131,4 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Default City
-// renderWeather("new york");
+renderWeather("chicago");
