@@ -18,7 +18,7 @@ body {
 .wrapper {
   background: #1e1e1e;
   border-radius: 10px;
-  width: 70%;
+  width: 80%;
   max-width: 800px;
 }
 
@@ -120,10 +120,11 @@ btn:focus {
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(1em, 1fr) repeat(3, minmax(0px, 230px)) minmax(
+  grid-template-columns: minmax(1em, 1fr) repeat(3, minmax(0px, 250px)) minmax(
       1em,
       1fr
     );
+  margin-bottom: 1em;
 }
 
 /* main */
@@ -142,11 +143,15 @@ btn:focus {
   justify-self: center;
 }
 
+.main-temp {
+  gap: 0.5em;
+}
+
 .weather-img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   position: relative;
-  top: -20px;
+  top: -12px;
 }
 
 .weather-conditions {
@@ -159,7 +164,6 @@ btn:focus {
 /* forecast */
 
 .forecast {
-  align-items: center;
   padding-bottom: 0.5em;
 }
 
@@ -173,21 +177,20 @@ btn:focus {
 
 .forecast-temp {
   grid-column: 3;
-  justify-self: center;
   display: flex;
-  align-items: center;
+  gap: 0.4em;
 }
 
 .weather-img-forecast {
-  width: 50px;
-  height: auto;
+  width: 40px;
+  height: 40px;
   position: relative;
-  top: -5px;
+  top: -8px;
 }
 
 .forecast-weather-description {
   grid-column: 4;
-  justify-self: end;
+  justify-self: start;
 }
 
 @media (max-width: 600px) {
@@ -212,7 +215,7 @@ btn:focus {
   /* Forecast */
 
   .forecast-date {
-    margin-bottom: 0;
+    margin-bottom: 0.2em;
   }
 
   .forecast-temp {

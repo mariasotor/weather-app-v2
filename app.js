@@ -48,7 +48,7 @@ function formatForecastDate(timestamp) {
 // ==Getting data from API and DOM manipulation==
 
 async function renderWeather(city) {
-  //Formatting main section date
+  // Format main section date
   const now = new Date();
   const day = `${now.getDate()}`.padStart(2, 0);
   let months = [
@@ -66,7 +66,7 @@ async function renderWeather(city) {
     "Dec",
   ];
   const month = months[now.getMonth()];
-  const hour = now.getHours();
+  const hour = `${now.getHours()}`.padStart(2, 0);
   const minutes = `${now.getMinutes()}`.padStart(2, 0);
 
   const dateNTime = `${month} ${day}, ${hour}:${minutes}`;
@@ -80,7 +80,7 @@ async function renderWeather(city) {
   const lat = dataGeo.lat;
   const lon = dataGeo.lon;
 
-  // current weather data
+  // Current weather data
   const key = "a1921bd56aaa472aba50748fba60247c";
 
   const responseWeather = await fetch(
@@ -91,41 +91,42 @@ async function renderWeather(city) {
   const [dataWeather] = data;
   console.log(dataWeather);
 
-  //Updating UI (main section)
+  // Update UI (main section)
   mainDate.textContent = dateNTime;
   cityName.textContent = dataWeather.city_name;
   feelTemp.textContent = Math.round(dataWeather.app_temp);
   mainWeather.textContent = dataWeather.weather.description;
   mainWeatherImg.src = `https://cdn.weatherbit.io/static/img/icons/${dataWeather.weather.icon}.png`;
+  mainWeatherImg.alt = dataWeather.weather.description;
   mainTemp.textContent = Math.round(dataWeather.temp);
   humidity.textContent = dataWeather.rh;
   wind.textContent = Math.round(dataWeather.wind_spd * 3.6);
 
-  //Getting forecast data
+  // Forecast data
   const responseForecast = await fetch(
-    `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}`
+    `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}&days=5`
   );
 
   const { data: dataForecast } = await responseForecast.json();
   console.log(dataForecast[0]);
 
   // Update UI (forecast data)
-  dataForecast.slice(0, 6).forEach((day) => {
+  dataForecast.forEach((day) => {
     const html = `
   <div class="grid">
-    <p class="forecast-date">${formatDate(day.ts)}</p>
+    <p class="forecast-date">${formatForecastDate(day.ts * 1000)}</p>
         <div class="forecast-temp">
             <img
               class="weather-img-forecast"
               src="https://cdn.weatherbit.io/static/img/icons/${
                 day.weather.icon
               }.png"
-              alt=""
+              alt=${day.weather.description}
             />
 
             <p class="forecast-temp-range">
-              <span class="max-temp">${day.max_temp}</span> /
-              <span class="min-temp">${day.min_temp}</span>°C
+              <span class="max-temp">${Math.round(day.max_temp)}</span> /
+              <span class="min-temp">${Math.round(day.min_temp)}</span> °C
             </p>
         </div>
         <p class="forecast-weather-description">${day.weather.description}</p>
@@ -152,5 +153,5 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && searchInput.value) defineCity();
 });
 
-// Default City
-renderWeather("chicago");
+// === Default City ===
+// renderWeather("chicago");
