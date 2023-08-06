@@ -89,7 +89,6 @@ async function renderWeather(city) {
 
   const { data } = await responseWeather.json();
   const [dataWeather] = data;
-  console.log(dataWeather);
 
   // Update UI (main section)
   mainDate.textContent = dateNTime;
@@ -108,15 +107,14 @@ async function renderWeather(city) {
   );
 
   const { data: dataForecast } = await responseForecast.json();
-  console.log(dataForecast[0]);
 
   // Update UI (forecast data)
 
-  let html;
+  let html = `<div class="grid">`;
 
   dataForecast.forEach((day) => {
-    html = `
-  
+    html += `
+
     <p class="forecast-date">${formatForecastDate(day.ts * 1000)}</p>
         <div class="forecast-temp">
             <img
@@ -134,7 +132,8 @@ async function renderWeather(city) {
         </div>
         <p class="forecast-weather-description">${day.weather.description}</p>`;
   });
-  forecastContainer.innerHTML = `<div class="grid">${html}</div>`;
+  html += `</div>`;
+  forecastContainer.innerHTML = html;
 }
 
 // ========Event handlers========
@@ -155,4 +154,4 @@ document.addEventListener("keydown", (e) => {
 });
 
 // === Default City ===
-// renderWeather("chicago");
+renderWeather("chicago");
