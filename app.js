@@ -73,7 +73,7 @@ async function renderWeather(city) {
 
   // Geocoding
   const responseGeo = await fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba
+    `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba
 `
   );
   const [dataGeo] = await responseGeo.json();
