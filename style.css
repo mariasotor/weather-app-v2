@@ -98,12 +98,13 @@ h3 {
 .city-input {
   width: 100%;
   padding: 0.75em;
-  border: 1px solid #c2c2c2;
+  border: 1px solid #dbdada;
+  background: #dbdada;
 }
 
 .btn {
   color: #1e1e1e;
-  background: #fff;
+  background: #dbdada;
   padding: 0 2em;
   border: 0;
   cursor: pointer;
@@ -124,7 +125,7 @@ btn:focus {
       1em,
       1fr
     );
-  margin-bottom: 1em;
+  gap: 1em;
 }
 
 /* main */
@@ -199,6 +200,7 @@ btn:focus {
         1em,
         1fr
       );
+    gap: 0;
   }
 
   .wrapper {

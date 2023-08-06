@@ -111,9 +111,12 @@ async function renderWeather(city) {
   console.log(dataForecast[0]);
 
   // Update UI (forecast data)
+
+  let html;
+
   dataForecast.forEach((day) => {
-    const html = `
-  <div class="grid">
+    html = `
+  
     <p class="forecast-date">${formatForecastDate(day.ts * 1000)}</p>
         <div class="forecast-temp">
             <img
@@ -129,11 +132,9 @@ async function renderWeather(city) {
               <span class="min-temp">${Math.round(day.min_temp)}</span> °C
             </p>
         </div>
-        <p class="forecast-weather-description">${day.weather.description}</p>
-  </div>`;
-
-    forecastContainer.insertAdjacentHTML("beforebegin", html);
+        <p class="forecast-weather-description">${day.weather.description}</p>`;
   });
+  forecastContainer.innerHTML = `<div class="grid">${html}</div>`;
 }
 
 // ========Event handlers========
