@@ -13,6 +13,8 @@ const mainTemp = document.querySelector(".temp-value");
 const humidity = document.querySelector(".humidity-value");
 const wind = document.querySelector(".wind-value");
 
+const wrapperContainer = document.querySelector(".wrapper");
+const currentWeatherContainer = document.querySelector(".main-weather");
 const forecastContainer = document.querySelector(".forecast");
 
 // ==== Forecast date formatting ====
@@ -51,7 +53,7 @@ async function getGeocoding(city) {
     `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba`
   );
 
-  if (!responseGeo.ok) {
+  if (!responseGeo?.ok) {
     throw new Error("An error has ocurred during geocoding");
   }
 
@@ -67,35 +69,37 @@ async function getWeather(city) {
     const geocoding = await getGeocoding(city);
     const key = "a1921bd56aaa472aba50748fba60247c";
 
-    if (geocoding) {
-      const [lon, lat] = geocoding;
-
-      // current weather
-      const responseWeather = await fetch(
-        `https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${key}`
-      );
-      // Forecast weather
-      const responseForecast = await fetch(
-        `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}&days=5`
-      );
-
-      if (!responseWeather.ok || !responseForecast.ok) {
-        throw new Error("Weather data fetching error");
-      }
-
-      const { data: currentWeather } = await responseWeather.json();
-      const [dataWeather] = currentWeather;
-
-      const { data: dataForecast } = await responseForecast.json();
-
-      return [dataWeather, dataForecast];
-    } else {
+    if (!geocoding) {
       console.error("Geocoding failed");
     }
+
+    const [lon, lat] = geocoding;
+
+    // current weather
+    const responseWeather = await fetch(
+      `https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${key}`
+    );
+
+    // Forecast weather
+    const responseForecast = await fetch(
+      `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}&days=5`
+    );
+
+    if (!responseWeather?.ok || !responseForecast?.ok) {
+      throw new Error("Weather data fetching error");
+    }
+
+    const { data: currentWeather } = await responseWeather.json();
+    const [dataWeather] = currentWeather;
+
+    const { data: dataForecast } = await responseForecast.json();
+
+    return [dataWeather, dataForecast];
   } catch (error) {
     console.error(
       `An error occurred while getting weather or geocoding data: ${error.message}`
     );
+
     throw error;
   }
 }
@@ -129,27 +133,31 @@ async function renderWeather(city) {
 
     // Update UI (main section)
     const [dataWeather] = await getWeather(city);
-    if (dataWeather) {
-      mainDate.textContent = dateNTime;
-      cityName.textContent = dataWeather.city_name;
-      feelTemp.textContent = Math.round(dataWeather.app_temp);
-      mainWeather.textContent = dataWeather.weather.description;
-      mainWeatherImg.src = `https://cdn.weatherbit.io/static/img/icons/${dataWeather.weather.icon}.png`;
-      mainWeatherImg.alt = dataWeather.weather.description;
-      mainTemp.textContent = Math.round(dataWeather.temp);
-      humidity.textContent = dataWeather.rh;
-      wind.textContent = Math.round(dataWeather.wind_spd * 3.6);
-    } else {
+    if (!dataWeather) {
       console.error("Error getting current weather data");
     }
+    mainDate.textContent = dateNTime;
+    cityName.textContent = dataWeather.city_name;
+    feelTemp.textContent = Math.round(dataWeather.app_temp);
+    mainWeather.textContent = dataWeather.weather.description;
+    mainWeatherImg.src = `https://cdn.weatherbit.io/static/img/icons/${dataWeather.weather.icon}.png`;
+    mainWeatherImg.alt = dataWeather.weather.description;
+    mainTemp.textContent = Math.round(dataWeather.temp);
+    humidity.textContent = dataWeather.rh;
+    wind.textContent = Math.round(dataWeather.wind_spd * 3.6);
+
+    currentWeatherContainer.style.opacity = 1;
 
     // Update UI (forecast data)
     const [, dataForecast] = await getWeather(city);
-    if (dataForecast) {
-      let html = `<div class="grid">`;
+    if (!dataForecast) {
+      console.error("Error getting forecast weather data");
+    }
 
-      dataForecast.forEach((day) => {
-        html += `
+    let html = `<div class="grid">`;
+
+    dataForecast.forEach((day) => {
+      html += `
 
     <p class="forecast-date">${formatForecastDate(day.ts * 1000)}</p>
         <div class="forecast-temp">
@@ -167,14 +175,17 @@ async function renderWeather(city) {
             </p>
         </div>
         <p class="forecast-weather-description">${day.weather.description}</p>`;
-      });
-      html += `</div>`;
-      forecastContainer.innerHTML = html;
-    } else console.error("Error getting forecast weather data");
+    });
+    html += `</div>`;
+    forecastContainer.innerHTML = html;
+    forecastContainer.style.opacity = 1;
   } catch (error) {
     console.error(
       `An error occurred while rendering weather: ${error.message}`
     );
+
+    wrapperContainer.innerHTML = `<p class="error-message">Oops! Something went wrong 🙈. Try again later!</p>`;
+
     throw error;
   }
 }
