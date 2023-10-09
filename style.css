@@ -169,7 +169,7 @@ btn:focus {
 .forecast {
   padding-bottom: 0.5em;
   opacity: 0;
-  transition: opacity 600s ease-in-out;
+  transition: opacity 600ms ease-in-out;
 }
 
 .forecast-title {
@@ -202,6 +202,7 @@ btn:focus {
 .error-message {
   font-size: 1.5rem;
   margin: 0;
+  padding: 1em;
   min-height: 100vh;
   display: flex;
   justify-content: center;

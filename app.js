@@ -108,6 +108,8 @@ async function getWeather(city) {
 
 async function renderWeather(city) {
   try {
+    currentWeatherContainer.style.opacity = 0;
+    forecastContainer.style.opacity = 0;
     // Format main section date
     const now = new Date();
     const day = `${now.getDate()}`.padStart(2, 0);
