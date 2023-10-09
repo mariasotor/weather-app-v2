@@ -47,7 +47,7 @@ function formatForecastDate(timestamp) {
   return dateStr;
 }
 
-// Geocoding
+// ===== Geocoding ======
 async function getGeocoding(city) {
   const responseGeo = await fetch(
     `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba`
@@ -63,7 +63,7 @@ async function getGeocoding(city) {
   return [lon, lat];
 }
 
-// Weather data
+// ======= Weather data =======
 async function getWeather(city) {
   try {
     const geocoding = await getGeocoding(city);
@@ -75,24 +75,25 @@ async function getWeather(city) {
 
     const [lon, lat] = geocoding;
 
-    // current weather
-    const responseWeather = await fetch(
-      `https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${key}`
-    );
+    // Weather data promises
+    const [weatherPromise, forecastPromise] = await Promise.all([
+      fetch(
+        `https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${lon}&key=${key}`
+      ),
+      fetch(
+        `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}&days=5`
+      ),
+    ]);
 
-    // Forecast weather
-    const responseForecast = await fetch(
-      `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lon}&key=${key}&days=5`
-    );
-
-    if (!responseWeather?.ok || !responseForecast?.ok) {
+    if (!weatherPromise.ok || !forecastPromise.ok) {
       throw new Error("Weather data fetching error");
     }
 
-    const { data: currentWeather } = await responseWeather.json();
+    // Extract data from the fulfilled promises
+    const { data: currentWeather } = await weatherPromise.json();
     const [dataWeather] = currentWeather;
 
-    const { data: dataForecast } = await responseForecast.json();
+    const { data: dataForecast } = await forecastPromise.json();
 
     return [dataWeather, dataForecast];
   } catch (error) {

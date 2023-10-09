@@ -133,7 +133,7 @@ btn:focus {
 .main-weather {
   align-items: center;
   opacity: 0;
-  transition: opacity 600ms ease-in-out;
+  transition: opacity 700ms ease-in-out;
 }
 
 .main-weather > * {
@@ -169,7 +169,7 @@ btn:focus {
 .forecast {
   padding-bottom: 0.5em;
   opacity: 0;
-  transition: opacity 600ms ease-in-out;
+  transition: opacity 700ms ease-in-out;
 }
 
 .forecast-title {
