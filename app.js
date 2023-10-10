@@ -49,18 +49,29 @@ function formatForecastDate(timestamp) {
 
 // ===== Geocoding ======
 async function getGeocoding(city) {
-  const responseGeo = await fetch(
-    `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba`
-  );
+  try {
+    const responseGeo = await fetch(
+      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba`
+    );
 
-  if (!responseGeo.ok) {
-    throw new Error("An error has ocurred during geocoding");
+    if (!responseGeo.ok) {
+      throw new Error("An error has ocurred during geocoding");
+    }
+
+    const [dataGeo] = await responseGeo.json();
+    if (
+      dataGeo &&
+      typeof dataGeo.lon !== "undefined" &&
+      typeof dataGeo.lat !== "undefined"
+    ) {
+      const lon = dataGeo.lon;
+      const lat = dataGeo.lat;
+      return [lon, lat];
+    }
+  } catch (error) {
+    console.error(error.message);
+    throw error;
   }
-
-  const [dataGeo] = await responseGeo.json();
-  const lon = dataGeo.lon;
-  const lat = dataGeo.lat;
-  return [lon, lat];
 }
 
 // ======= Weather data =======
@@ -70,7 +81,9 @@ async function getWeather(city) {
     const key = "a1921bd56aaa472aba50748fba60247c";
 
     if (!geocoding) {
-      console.error("An error has occurred during geocoding");
+      throw new Error(
+        "An error has occurred during geocoding. Please make sure you entered a valid city name and try again"
+      );
     }
 
     const [lon, lat] = geocoding;
@@ -136,9 +149,11 @@ async function renderWeather(city) {
 
     // Update UI (main section)
     const [dataWeather] = await getWeather(city);
+
     if (!dataWeather) {
-      console.error("Error getting current weather data.");
+      throw new Error("Error getting current weather data");
     }
+
     mainDate.textContent = dateNTime;
     cityName.textContent = dataWeather.city_name;
     feelTemp.textContent = Math.round(dataWeather.app_temp);
@@ -154,7 +169,7 @@ async function renderWeather(city) {
     // Update UI (forecast data)
     const [, dataForecast] = await getWeather(city);
     if (!dataForecast) {
-      console.error("Error getting forecast weather data.");
+      throw new Error("Error getting forecast weather data");
     }
 
     let html = `<div class="grid">`;
@@ -189,9 +204,8 @@ async function renderWeather(city) {
     <p class="error-message"> 
     Oops! Something went wrong ⚠️ 
     <br />
-    ${`${error.message}`.toLowerCase()}.
-    <br />
-    Try again later!</p>`;
+    ${error.message}.
+    <br />`;
 
     throw error;
   }
