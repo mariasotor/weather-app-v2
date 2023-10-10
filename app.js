@@ -53,7 +53,7 @@ async function getGeocoding(city) {
     `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=6bec232055e3f161982b528c34084fba`
   );
 
-  if (!responseGeo?.ok) {
+  if (!responseGeo.ok) {
     throw new Error("An error has ocurred during geocoding");
   }
 
@@ -70,7 +70,7 @@ async function getWeather(city) {
     const key = "a1921bd56aaa472aba50748fba60247c";
 
     if (!geocoding) {
-      console.error("Geocoding failed");
+      console.error("An error has occurred during geocoding");
     }
 
     const [lon, lat] = geocoding;
@@ -86,7 +86,9 @@ async function getWeather(city) {
     ]);
 
     if (!weatherPromise.ok || !forecastPromise.ok) {
-      throw new Error("Weather data fetching error");
+      throw new Error(
+        `An error occurred while getting weather data: ${weatherPromise.statusText}`
+      );
     }
 
     // Extract data from the fulfilled promises
@@ -97,9 +99,7 @@ async function getWeather(city) {
 
     return [dataWeather, dataForecast];
   } catch (error) {
-    console.error(
-      `An error occurred while getting weather or geocoding data: ${error.message}`
-    );
+    console.error(error.message);
 
     throw error;
   }
@@ -137,7 +137,7 @@ async function renderWeather(city) {
     // Update UI (main section)
     const [dataWeather] = await getWeather(city);
     if (!dataWeather) {
-      console.error("Error getting current weather data");
+      console.error("Error getting current weather data.");
     }
     mainDate.textContent = dateNTime;
     cityName.textContent = dataWeather.city_name;
@@ -154,7 +154,7 @@ async function renderWeather(city) {
     // Update UI (forecast data)
     const [, dataForecast] = await getWeather(city);
     if (!dataForecast) {
-      console.error("Error getting forecast weather data");
+      console.error("Error getting forecast weather data.");
     }
 
     let html = `<div class="grid">`;
@@ -183,11 +183,15 @@ async function renderWeather(city) {
     forecastContainer.innerHTML = html;
     forecastContainer.style.opacity = 1;
   } catch (error) {
-    console.error(
-      `An error occurred while rendering weather: ${error.message}`
-    );
+    console.error(error.message);
 
-    wrapperContainer.innerHTML = `<p class="error-message">Oops! Something went wrong 🙈. Try again later!</p>`;
+    wrapperContainer.innerHTML = `
+    <p class="error-message"> 
+    Oops! Something went wrong ⚠️ 
+    <br />
+    ${`${error.message}`.toLowerCase()}.
+    <br />
+    Try again later!</p>`;
 
     throw error;
   }

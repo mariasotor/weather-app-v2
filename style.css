@@ -7,6 +7,7 @@ body {
   font-family: "Space Grotesk", sans-serif;
   font-size: 1rem;
   font-weight: 400;
+  background: #1e1e1e;
   color: #aacc00;
   margin: 0;
   display: flex;
@@ -16,7 +17,9 @@ body {
 
 .wrapper {
   background: #1e1e1e;
+  border: #aacc006e 3px solid;
   border-radius: 10px;
+  margin: 2em 0;
   width: 80%;
   max-width: 800px;
   min-height: 100vh;
@@ -208,6 +211,7 @@ btn:focus {
   justify-content: center;
   align-items: center;
   text-align: center;
+  line-height: 1.5;
 }
 
 @media (max-width: 600px) {
@@ -221,6 +225,7 @@ btn:focus {
 
   .wrapper {
     border-radius: 0px;
+    border: none;
     width: 100%;
   }
 
